@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+}
+
+@theme inline {
+  --font-sans: var(--font-thinos-sans);
+}
