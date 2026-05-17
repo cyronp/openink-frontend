@@ -1,8 +1,11 @@
+import CTASection from "./components/cta-section";
+import Header from "./components/header";
 
 export default function Home() {
   return (
-    <>
-    <h1>open<span className="italic">ink</span></h1>
-    </>
+    <div className="flex flex-col max-w-360 mx-auto items-center">
+      <Header />
+      <CTASection/>
+    </div>
   );
 }
