@@ -21,7 +21,7 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-tinos-sans);
+  --font-sans: var(--font-tinos-sans), serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);

@@ -1,20 +1,20 @@
-import Heading from "./Heading";
+import Text from "./Text";
 import type { Meta, StoryObj } from "@storybook/react";
-import type { HeadingProps } from "./HeadingProps";
+import type { TextProps } from "./TextProps";
 
-const meta: Meta<typeof Heading> = {
-  title: "Typography/Heading",
-  component: Heading,
+const meta: Meta<typeof Text> = {
+  title: "Typography/Text",
+  component: Text,
   argTypes: {
     as: { control: "text", description: "Tag HTML do component" },
     asChild: { control: "boolean", description: "Renderizar asChild" },
     variant: {
       control: { type: "select" },
       options: ["Primary", "Secondary", "Terciary"],
-      description: "Variantes do cabeçalho",
+      description: "Variantes do texto",
     },
     className: { control: "text", description: "TailwindCSS customizados" },
-    children: { control: "text", description: "Contéudo do cabeçalho" },
+    children: { control: "text", description: "Contéudo do texto" },
   },
   parameters: {
     docs: {
@@ -27,28 +27,38 @@ const meta: Meta<typeof Heading> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Heading>;
+type Story = StoryObj<typeof Text>;
 
 export const Default: Story = {
   args: {
-    children: "Primário Heading",
+    children: "Exemplo de Texto Primario",
     variant: "Primary",
-    as: "h1",
+    as: "p",
+    asChild: false,
+    className: "",
   },
 };
 
 export const Secondary: Story = {
   args: {
-    children: "Secundário Heading",
+    children: "Exemplo de Texto Secundario",
     variant: "Secondary",
-    as: "h2",
+    as: "p",
   },
 };
 
 export const Terciary: Story = {
   args: {
-    children: "Terciário Heading",
+    children: "Exemplo de Texto Terciario",
     variant: "Terciary",
-    as: "h3",
+    as: "p",
+  },
+};
+
+export const Span: Story = {
+  args: {
+    children: "Exemplo de Texto como span",
+    variant: "Primary",
+    as: "span",
   },
 };

@@ -1,5 +1,12 @@
 import type { Preview } from "@storybook/nextjs-vite";
 import "../app/globals.css";
+import { Tinos } from "next/font/google";
+
+const tinos = Tinos({
+  variable: "--font-tinos-sans",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
 
 const preview: Preview = {
   parameters: {
@@ -17,6 +24,16 @@ const preview: Preview = {
       test: "todo",
     },
   },
+  decorators: [
+    (Story: any) => (
+      <div
+        className={tinos.variable}
+        style={{ fontFamily: "var(--font-tinos-sans), serif" }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default preview;
