@@ -1,5 +1,5 @@
-import Heading from "./Heading/Heading";
-import { Separator } from "./Separator/Separator";
+import Heading from "./ui/Heading/Heading";
+import { Separator } from "./ui/Separator/Separator";
 
 export default function CTASection() {
   return (
@@ -11,7 +11,7 @@ export default function CTASection() {
         placeholder="Pesquise temas, assuntos, histórias..."
         className="w-full py-3 px-6 border border-muted-foreground"
       ></input>
-      <Separator/>
+      <Separator />
     </div>
   );
 }

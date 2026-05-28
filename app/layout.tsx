@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { Tinos } from "next/font/google";
+import { Lora } from "next/font/google";
 import "./globals.css";
 
-const tinos = Tinos({
-  variable: "--font-tinos-sans",
+const lora = Lora({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  variable: "--font-lora",
 });
 
 export const metadata: Metadata = {
@@ -19,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br" className={`${tinos.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+    <html lang="pt-br" className={`${lora.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col font-main">{children}</body>
     </html>
   );
 }

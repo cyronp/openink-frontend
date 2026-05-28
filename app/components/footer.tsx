@@ -1,4 +1,4 @@
-import Text from "./Text/Text";
+import Text from "@/app/components/ui/Text/Text";
 
 export default function Footer() {
   return (

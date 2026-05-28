@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import Text from "./Text/Text";
-import Heading from "./Heading/Heading";
-import { Separator } from "./Separator/Separator";
+import Text from "@/app/components/ui/Text/Text";
+import Heading from "@/app/components/ui/Heading/Heading";
+import { Separator } from "./ui/Separator/Separator";
 
 type FilterQuery = "all" | "weekly" | "monthly" | "alltime";
 

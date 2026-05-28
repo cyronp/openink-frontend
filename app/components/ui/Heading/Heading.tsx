@@ -1,6 +1,6 @@
 import React from "react";
-import { cn } from "../../utils/cn";
-import { HeadingProps, HeadingVariant } from "./HeadingProps";
+import { cn } from "@/app/utils/cn";
+import { HeadingProps, HeadingVariant } from "@/app/components/ui/Heading/HeadingProps";
 
 const variantClasses: Record<HeadingVariant, string> = {
   Primary: "text-4xl font-semibold tracking-tight",

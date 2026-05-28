@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "../../utils/cn";
+import { cn } from "@/app/utils/cn";
 import { TextProps, TextVariant } from "./TextProps";
 
 const variantClasses: Record<TextVariant, string> = {

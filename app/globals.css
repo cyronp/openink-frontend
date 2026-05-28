@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --black:    #000000;
-  --white:    #ffffff;
+  --black: #000000;
+  --white: #ffffff;
 
-  --gray-50:  #f7f7f7;
+  --gray-50: #f7f7f7;
   --gray-100: #efefef;
   --gray-200: #d9d9d9;
   --gray-300: #bebebe;
@@ -15,60 +15,63 @@
   --gray-800: #1f1f1f;
   --gray-900: #0a0a0a;
 
+  --font-tinos-sans: 
 
-  --background:        var(--white);
+
+  --background: var(--white);
   --background-subtle: var(--gray-50);
-  --surface:           var(--white);
-  --surface-raised:    var(--gray-100);
-  --surface-overlay:   var(--gray-200);
+  --surface: var(--white);
+  --surface-raised: var(--gray-100);
+  --surface-overlay: var(--gray-200);
 
-  --border:        var(--gray-200);
+  --border: var(--gray-200);
   --border-strong: var(--gray-400);
-  --border-focus:  var(--black);
+  --border-focus: var(--black);
 
-  --text-primary:   var(--gray-900);
+  --text-primary: var(--gray-900);
   --text-secondary: var(--gray-600);
-  --text-tertiary:  var(--gray-400);
-  --text-disabled:  var(--gray-300);
-  --text-inverse:   var(--white);
+  --text-tertiary: var(--gray-400);
+  --text-disabled: var(--gray-300);
+  --text-inverse: var(--white);
 
-  --interactive-bg:              var(--black);
-  --interactive-bg-hover:        var(--gray-800);
-  --interactive-bg-active:       var(--gray-700);
-  --interactive-bg-subtle:       var(--gray-100);
+  --interactive-bg: var(--black);
+  --interactive-bg-hover: var(--gray-800);
+  --interactive-bg-active: var(--gray-700);
+  --interactive-bg-subtle: var(--gray-100);
   --interactive-bg-subtle-hover: var(--gray-200);
-  --interactive-fg:              var(--white);
-  --interactive-fg-subtle:       var(--gray-900);
+  --interactive-fg: var(--white);
+  --interactive-fg-subtle: var(--gray-900);
 
-  --primary:            var(--black);
+  --primary: var(--black);
   --primary-foreground: var(--white);
 
-  --secondary:            var(--gray-100);
+  --secondary: var(--gray-100);
   --secondary-foreground: var(--gray-900);
 
-  --muted:            var(--gray-100);
+  --muted: var(--gray-100);
   --muted-foreground: var(--gray-500);
 
-  --accent:            var(--gray-900);
+  --accent: var(--gray-900);
   --accent-foreground: var(--white);
 
-  --card:            var(--white);
+  --card: var(--white);
   --card-foreground: var(--gray-900);
 
-  --popover:            var(--white);
+  --popover: var(--white);
   --popover-foreground: var(--gray-900);
 
-  --input:  var(--gray-300);
-  --ring:   var(--black);
+  --input: var(--gray-300);
+  --ring: var(--black);
 
-  --destructive:            var(--gray-900);
+  --destructive: var(--gray-900);
   --destructive-foreground: var(--white);
 }
 
 @theme inline {
-  --color-black:    var(--black);
-  --color-white:    var(--white);
-  --color-gray-50:  var(--gray-50);
+  --color-black: var(--black);
+
+  --color-white: var(--white);
+  --color-gray-50: var(--gray-50);
   --color-gray-100: var(--gray-100);
   --color-gray-200: var(--gray-200);
   --color-gray-300: var(--gray-300);
@@ -79,44 +82,46 @@
   --color-gray-800: var(--gray-800);
   --color-gray-900: var(--gray-900);
 
-  --color-background:        var(--background);
+  --color-background: var(--background);
   --color-background-subtle: var(--background-subtle);
-  --color-surface:           var(--surface);
-  --color-surface-raised:    var(--surface-raised);
-  --color-surface-overlay:   var(--surface-overlay);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-overlay: var(--surface-overlay);
 
-  --color-border:        var(--border);
+  --color-border: var(--border);
   --color-border-strong: var(--border-strong);
-  --color-border-focus:  var(--border-focus);
+  --color-border-focus: var(--border-focus);
 
-  --color-text-primary:   var(--text-primary);
+  --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
-  --color-text-tertiary:  var(--text-tertiary);
-  --color-text-disabled:  var(--text-disabled);
-  --color-text-inverse:   var(--text-inverse);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-disabled: var(--text-disabled);
+  --color-text-inverse: var(--text-inverse);
 
-  --color-interactive-bg:              var(--interactive-bg);
-  --color-interactive-bg-hover:        var(--interactive-bg-hover);
-  --color-interactive-bg-active:       var(--interactive-bg-active);
-  --color-interactive-bg-subtle:       var(--interactive-bg-subtle);
+  --color-interactive-bg: var(--interactive-bg);
+  --color-interactive-bg-hover: var(--interactive-bg-hover);
+  --color-interactive-bg-active: var(--interactive-bg-active);
+  --color-interactive-bg-subtle: var(--interactive-bg-subtle);
   --color-interactive-bg-subtle-hover: var(--interactive-bg-subtle-hover);
-  --color-interactive-fg:              var(--interactive-fg);
-  --color-interactive-fg-subtle:       var(--interactive-fg-subtle);
+  --color-interactive-fg: var(--interactive-fg);
+  --color-interactive-fg-subtle: var(--interactive-fg-subtle);
 
-  --color-primary:            var(--primary);
+  --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary:            var(--secondary);
+  --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted:            var(--muted);
+  --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-accent:            var(--accent);
+  --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --color-card:            var(--card);
+  --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
-  --color-popover:            var(--popover);
+  --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-input:   var(--input);
-  --color-ring:    var(--ring);
-  --color-destructive:            var(--destructive);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+
+  --font-main: var(--font-lora), serif;
 }
