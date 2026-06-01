@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "./ui/Button/Button";
 import Heading from "./ui/Heading/Heading";
 import Text from "./ui/Text/Text";
@@ -11,7 +12,9 @@ export default function Header() {
       </Heading>
       <div className="flex flex-row gap-4 items-center">
         <Button size="fit" className="text-xl">
-          ESCREVA
+          <Link href="/write">
+            ESCREVA
+          </Link>
         </Button>
         <UserButton />
       </div>
