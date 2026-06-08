@@ -1,4 +1,5 @@
 import Heading from "./ui/Heading/Heading";
+import { Input } from "./ui/Input/Input";
 import { Separator } from "./ui/Separator/Separator";
 
 export default function CTASection() {
@@ -7,10 +8,10 @@ export default function CTASection() {
       <Heading as="h2" className="font-normal text-3xl italic text-center">
         Sem Conta. Sem algoritmo. Apenas escrita.
       </Heading>
-      <input
+      <Input
         placeholder="Pesquise temas, assuntos, histórias..."
-        className="w-full py-3 px-6 border border-muted-foreground"
-      ></input>
+        className="w-full"
+      ></Input>
       <Separator />
     </div>
   );

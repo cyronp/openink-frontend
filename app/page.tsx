@@ -5,13 +5,15 @@ import Header from "./components/header";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen max-w-360 mx-auto items-center">
+    <>
       <Header />
-      <main className="grow w-full flex flex-col items-center">
-        <CTASection />
-        <ContentSection />
-      </main>
+      <div className="flex flex-col max-h-screen max-w-360 mx-auto items-center">
+        <main className="grow w-full flex flex-col items-center">
+          <CTASection />
+          <ContentSection />
+        </main>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
