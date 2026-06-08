@@ -1,8 +1,8 @@
 import * as z from "zod";
 
-const NameLogin = z.object({
+export const NameLoginSchema = z.object({
   name: z
-    .string()
+    .string("Nome necessário.")
     .regex(
       /^[a-zA-ZÀ-ÿ\s]+$/,
       "O seu nome não deve ter números ou caracteres especiais.",
@@ -12,6 +12,4 @@ const NameLogin = z.object({
     }),
 });
 
-type NameLogin = z.infer<typeof NameLogin>;
-
-export default NameLogin;
+export type NameLogin = z.infer<typeof NameLoginSchema>;

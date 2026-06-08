@@ -6,8 +6,18 @@ import { Separator } from "../ui/Separator/Separator";
 import { XIcon } from "lucide-react";
 import { Input } from "../ui/Input/Input";
 import { Button } from "../ui/Button/Button";
+import { NameLoginSchema, type NameLogin } from "@/app/schema/NameLoginSchema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function LoginModal({ onClose }: { onClose?: () => void }) {
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NameLogin>({
+    resolver: zodResolver(NameLoginSchema),
+  });
+
   const [isToken, setIsToken] = useState(false);
 
   function toggleTokenLogin() {
@@ -17,6 +27,9 @@ export default function LoginModal({ onClose }: { onClose?: () => void }) {
   function closeModal() {
     if (onClose) onClose();
   }
+  const onSubmit = (data: NameLogin) => {
+    console.log("Dados enviados:", data);
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30">
@@ -65,25 +78,30 @@ export default function LoginModal({ onClose }: { onClose?: () => void }) {
             <XIcon />
           </Button>
           <Text className="text-center font-semibold text-xl">Bem vindo!</Text>
-          <Text className="text-center font-semibold text-sm text-muted-foreground">
-            Insira um apelido para acessar
-          </Text>
-          <Separator />
-          <Text className="">Insira seu apelido</Text>
-          <Input className="w-full border" placeholder="Seu apelido"></Input>
-          <div className="flex flex-row gap-2 items-center">
-            <Text className="text-left text-base">Ou</Text>
-            <Button
-              size="fit"
-              className="font-semibold underline cursor-pointer text-sm"
-              onClick={toggleTokenLogin}
-            >
-              entre com seu token
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Text className="text-center font-semibold text-sm text-muted-foreground">
+              Insira um apelido para acessar
+            </Text>
+            <Separator />
+            <Text className="" as="label">
+              Insira seu apelido
+            </Text>
+            <Input className="w-full border" placeholder="Seu apelido"></Input>
+            {errors.name && <Text as="span" className="text-red-500">{errors.name.message}</Text>}
+            <div className="flex flex-row gap-2 items-center">
+              <Text className="text-left text-base">Ou</Text>
+              <Button
+                size="fit"
+                className="font-semibold underline cursor-pointer text-sm"
+                onClick={toggleTokenLogin}
+              >
+                entre com seu token
+              </Button>
+            </div>
+            <Button size="lg" type="submit" variant="default">
+              Acessar
             </Button>
-          </div>
-          <Button size="lg" variant="default">
-            Acessar
-          </Button>
+          </form>
         </div>
       )}
     </div>
