@@ -6,6 +6,8 @@ import Link from "next/link";
 import Text from "@/app/components/ui/Text/Text";
 import Heading from "@/app/components/ui/Heading/Heading";
 import { Separator } from "@/app/components/ui/Separator/Separator";
+import HelpModal from "../components/HelpModal/HelpModal";
+import { Button } from "../components/ui/Button/Button";
 
 function WordCount({ text }: { text: string }) {
   const chars = text.length;
@@ -15,6 +17,7 @@ function WordCount({ text }: { text: string }) {
       <Text as="p" className="text-xs text-muted-foreground">
         {chars} caracteres
       </Text>
+      <HelpModal />
     </span>
   );
 }
@@ -27,47 +30,21 @@ export default function WritePage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <header className="sticky top-0 z-10 bg-background border-b border-border">
-        <div className="max-w-6xl mx-auto px-4 h-12 flex items-center gap-4">
+      <header className="sticky top-0 z-10 bg-white border-b border-border">
+        <div className="max-w-6xl mx-auto px-4 h-12 flex items-center justify-between">
           <Link href="/">
-            <button className="flex items-center cursor-pointer">
-              <ChevronLeft
-                size={16}
-              />
+            <Button className="flex items-center cursor-pointer" variant="ghost">
+              <ChevronLeft size={16} />
               <Text as="p" className="text-sm hidden sm:inline">
                 Voltar
               </Text>
-            </button>
+            </Button>
           </Link>
-
-          <div className="flex md:hidden items-center border border-border rounded-md overflow-hidden">
-            <button
-              onClick={() => setActiveTab("write")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 transition-colors ${
-                activeTab === "write"
-                  ? "bg-foreground text-background"
-                  : "bg-background text-muted-foreground hover:bg-muted"
-              }`}
-            >
-              <PenLine size={12} />
-              <Text as="p" className="text-xs">
-                Escrever
-              </Text>
-            </button>
-            <button
-              onClick={() => setActiveTab("preview")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 transition-colors ${
-                activeTab === "preview"
-                  ? "bg-foreground text-background"
-                  : "bg-background text-muted-foreground hover:bg-muted"
-              }`}
-            >
-              <Eye size={12} />
-              <Text as="p" className="text-xs">
-                Preview
-              </Text>
-            </button>
-          </div>
+          <Button className="flex items-center cursor-pointer" variant="default">
+            <Text as="p" className="text-sm hidden sm:inline">
+              Publicar
+            </Text>
+          </Button>
         </div>
       </header>
 
@@ -103,7 +80,37 @@ export default function WritePage() {
               >
                 <PenLine size={11} /> Editor
               </Text>
-              <WordCount text={markdownContent} />
+              <div className="flex items-center gap-3">
+                <WordCount text={markdownContent} />
+                <div className="flex md:hidden items-center border border-border rounded-md overflow-hidden">
+                  <button
+                    onClick={() => setActiveTab("write")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 transition-colors ${
+                      activeTab === "write"
+                        ? "bg-foreground text-background"
+                        : "bg-background text-muted-foreground hover:bg-muted"
+                    }`}
+                  >
+                    <PenLine size={12} />
+                    <Text as="p" className="text-xs">
+                      Escrever
+                    </Text>
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("preview")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 transition-colors ${
+                      activeTab === "preview"
+                        ? "bg-foreground text-background"
+                        : "bg-background text-muted-foreground hover:bg-muted"
+                    }`}
+                  >
+                    <Eye size={12} />
+                    <Text as="p" className="text-xs">
+                      Preview
+                    </Text>
+                  </button>
+                </div>
+              </div>
             </div>
             <textarea
               className="flex-1 w-full bg-transparent border-none outline-none resize-none text-foreground placeholder:text-muted-foreground leading-7 text-sm font-mono"

@@ -11,9 +11,9 @@ export default function Home() {
         <main className="grow w-full flex flex-col items-center">
           <CTASection />
           <ContentSection />
+          <Footer />
         </main>
       </div>
-      <Footer />
     </>
   );
 }
