@@ -11,7 +11,7 @@ export default function Header() {
         open<span className="italic">ink</span>
       </Heading>
       <div className="flex flex-row gap-4 items-center">
-        <Button size="fit" className="text-xl">
+        <Button size="fit" className="text-xl" asChild>
           <Link href="/write">
             ESCREVA
           </Link>

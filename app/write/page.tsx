@@ -10,10 +10,7 @@ import Text from "@/app/components/ui/Text/Text";
 import { Separator } from "@/app/components/ui/Separator/Separator";
 import { Button } from "../components/ui/Button/Button";
 
-import {
-  WritePostSchema,
-  type WritePost,
-} from "../schema/WritePostSchema";
+import { WritePostSchema, type WritePost } from "../schema/WritePostSchema";
 
 import FieldError from "@/app/components/FieldError";
 import WordCount from "@/app/components/WordCount";
@@ -21,8 +18,7 @@ import TabButton from "@/app/components/TabButton";
 import MarkdownPreview from "@/app/components/MarkdownPreview";
 
 export default function WritePage() {
-  const [activeTab, setActiveTab] =
-    useState<"write" | "preview">("write");
+  const [activeTab, setActiveTab] = useState<"write" | "preview">("write");
 
   const {
     register,
@@ -48,18 +44,16 @@ export default function WritePage() {
     <div className="min-h-screen bg-background flex flex-col">
       <header className="sticky top-0 z-10 bg-white border-b border-border">
         <div className="max-w-6xl mx-auto px-4 h-12 flex items-center justify-between">
-          <Link href="/">
-            <Button
-              variant="ghost"
-              className="flex items-center cursor-pointer"
-            >
+          <Button
+            variant="ghost"
+            className="flex items-center cursor-pointer"
+            asChild
+          >
+            <Link href="/">
               <ChevronLeft size={16} />
-
-              <Text as="p" className="hidden sm:inline text-sm">
-                Voltar
-              </Text>
-            </Button>
-          </Link>
+              Voltar
+            </Link>
+          </Button>
 
           <Button
             type="submit"
@@ -72,10 +66,7 @@ export default function WritePage() {
         </div>
       </header>
 
-      <form
-        id="writePostForm"
-        onSubmit={handleSubmit(submitPost)}
-      >
+      <form id="writePostForm" onSubmit={handleSubmit(submitPost)}>
         <div className="max-w-6xl mx-auto w-full px-4 pt-8 pb-6">
           <div className="max-w-2xl flex flex-col gap-3">
             <input
@@ -104,9 +95,7 @@ export default function WritePage() {
           <div className="flex gap-6 min-h-[calc(100vh-220px)]">
             <div
               className={`w-full md:w-1/2 flex flex-col gap-4 ${
-                activeTab === "preview"
-                  ? "hidden md:flex"
-                  : "flex"
+                activeTab === "preview" ? "hidden md:flex" : "flex"
               }`}
             >
               <div className="flex items-center justify-between">
@@ -118,7 +107,7 @@ export default function WritePage() {
                   Editor
                 </Text>
 
-                    <FieldError error={errors.content} />
+                <FieldError error={errors.content} />
                 <div className="flex items-center gap-3">
                   <WordCount text={form.content} />
 
@@ -147,16 +136,13 @@ export default function WritePage() {
                 placeholder={`## Comece a escrever...\n\nUse **negrito**, *itálico*, [links](url), e muito mais com Markdown.`}
                 className="flex-1 w-full bg-transparent border-none outline-none resize-none text-sm font-mono leading-7"
               />
-
             </div>
 
             <Separator className="hidden md:block h-auto w-px self-stretch" />
 
             <div
               className={`w-full md:w-1/2 flex flex-col gap-4 ${
-                activeTab === "write"
-                  ? "hidden md:flex"
-                  : "flex"
+                activeTab === "write" ? "hidden md:flex" : "flex"
               }`}
             >
               <Text
