@@ -111,14 +111,14 @@ export default function ContentSection() {
               <div className="flex flex-col gap-1">
                 <Heading
                   as="h3"
-                  className="text-lg md:text-2xl font-bold group-hover:text-neutral-600"
+                  className="text-lg md:text-xl font-bold group-hover:text-neutral-600"
                 >
                   {pub.title}
                 </Heading>
 
                 <Text
                   as="p"
-                  className="text-sm md:text-base text-muted-foreground group-hover:text-neutral-400"
+                  className="text-sm text-muted-foreground group-hover:text-neutral-400"
                 >
                   {pub.description}
                 </Text>
