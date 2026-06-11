@@ -1,7 +1,7 @@
 import ContentSection from "./components/content-section";
 import CTASection from "./components/cta-section";
 import Footer from "./components/footer";
-import Header from "./components/header";
+import Header from "./components/Headers/header";
 
 export default function Home() {
   return (
@@ -11,9 +11,9 @@ export default function Home() {
         <main className="grow w-full flex flex-col items-center">
           <CTASection />
           <ContentSection />
-          <Footer />
         </main>
       </div>
+      <Footer />
     </>
   );
 }

@@ -78,6 +78,7 @@ export default function LoginModal({ onClose }: { onClose?: () => void }) {
               <div className="flex flex-row gap-2 items-center">
                 <Text className="text-left text-base">Ou</Text>
                 <Button
+                  type="button"
                   size="fit"
                   className="font-semibold underline cursor-pointer text-sm"
                   onClick={toggleTokenLogin}
@@ -132,6 +133,7 @@ export default function LoginModal({ onClose }: { onClose?: () => void }) {
               <div className="flex flex-row gap-2 items-center">
                 <Text className="text-left text-base">Ou</Text>
                 <Button
+                  type="button"
                   size="fit"
                   className="font-semibold underline cursor-pointer text-sm"
                   onClick={toggleTokenLogin}

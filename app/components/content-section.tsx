@@ -3,6 +3,7 @@ import { useState } from "react";
 import Text from "@/app/components/ui/Text/Text";
 import Heading from "@/app/components/ui/Heading/Heading";
 import { Separator } from "./ui/Separator/Separator";
+import Link from "next/link";
 
 type FilterQuery = "all" | "weekly" | "monthly" | "alltime";
 
@@ -77,13 +78,13 @@ export default function ContentSection() {
   return (
     <div className="flex flex-col gap-4 max-w-full p-4">
       {/* Filter Options */}
-      <div className="flex flex-row gap-4 items-center justify-center px-8 w-full overflow-hidden">
+      <div className="flex flex-wrap gap-x-4 gap-y-2 items-center justify-center w-full">
         {OPTIONS.map(({ label, query }) => (
           <Text
             as="a"
             key={query}
             onClick={() => setSelectedQuery(query)}
-            className={`text-xl tracking-tight cursor-pointer ${
+            className={`text-sm md:text-base lg:text-xl tracking-tight cursor-pointer whitespace-nowrap ${
               selectedQuery === query
                 ? "text-primary underline"
                 : "text-muted-foreground"
@@ -101,67 +102,79 @@ export default function ContentSection() {
         </Text>
       ) : (
         publications.map((pub) => (
-          <div
+          <Link
             key={pub.title}
-            className="group w-full flex flex-col gap-4 cursor-pointer"
+            href="/read"
+            className="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black focus-visible:ring-offset-2 ring-offset-background"
           >
-            <div>
-              <Heading
-                as="h3"
-                className="text-2xl font-bold group-hover:text-neutral-600"
-              >
-                {pub.title}
-              </Heading>
-              <Text
-                as="p"
-                className="text-muted-foreground group-hover:text-neutral-400"
-              >
-                {pub.description}
-              </Text>
-              <div className="flex flex-row gap-4 text-muted-foreground group-hover:text-neutral-400">
-                <Text as="p" className="text-sm">
-                  ♡ {pub.likeQnt}
+            <div className="group w-full flex flex-col gap-3 cursor-pointer">
+              <div className="flex flex-col gap-1">
+                <Heading
+                  as="h3"
+                  className="text-lg md:text-2xl font-bold group-hover:text-neutral-600"
+                >
+                  {pub.title}
+                </Heading>
+
+                <Text
+                  as="p"
+                  className="text-sm md:text-base text-muted-foreground group-hover:text-neutral-400"
+                >
+                  {pub.description}
                 </Text>
-                <Text as="p" className="text-sm">
-                  Autor: {pub.user}
-                </Text>
-                <Text as="p" className="text-sm">
-                  Temp. de leitura: {pub.readTime} minutos
-                </Text>
-                <Text as="p" className="text-sm">
-                  Qnt. caracteres: {pub.caracterQnt}
-                </Text>
+
+                <div className="flex flex-row md:gap-4 gap-2  text-muted-foreground group-hover:text-neutral-400 mt-1">
+                  <Text as="p" className="text-xs md:text-sm">
+                    ♡ {pub.likeQnt}
+                  </Text>
+                  <Text as="p" className="text-xs md:text-sm">
+                    {pub.user}
+                  </Text>
+                  <Text as="p" className="text-xs md:text-sm">
+                    {pub.readTime} min de leitura
+                  </Text>
+                  <Text as="p" className="text-xs md:text-sm">
+                    {pub.caracterQnt} caracteres
+                  </Text>
+                </div>
               </div>
+
+              <Separator />
             </div>
-            <Separator />
-          </div>
+          </Link>
         ))
       )}
+
       {/* Pagination */}
-      <div className="w-full flex flex-row gap-4 items-center justify-center text-xl py-2">
+      <div className="w-full flex flex-row gap-2 md:gap-4 items-center justify-center text-base md:text-xl py-2">
         <button
-          className="cursor-pointer hover:text-neutral-500"
-          onClick={() => setSelectedPagination(selectedPagination - 1)}
+          className="cursor-pointer hover:text-neutral-500 shrink-0"
+          onClick={() => setSelectedPagination((p) => Math.max(1, p - 1))}
         >
-          ← Anterior
+          ← <span className="hidden sm:inline">Anterior</span>
         </button>
-        <div className="flex flex-row gap-2">
+
+        <div className="flex flex-row gap-1 md:gap-2">
           {[1, 2, 99].map((page) => (
             <button
               key={page}
               onClick={() => setSelectedPagination(page)}
-              className={`p-2 cursor-pointer
-                ${selectedPagination === page ? "text-black" : "text-muted-foreground"}`}
+              className={`p-2 cursor-pointer ${
+                selectedPagination === page
+                  ? "text-black"
+                  : "text-muted-foreground"
+              }`}
             >
               {page}
             </button>
           ))}
         </div>
+
         <button
-          className="cursor-pointer hover:text-neutral-500"
-          onClick={() => setSelectedPagination(selectedPagination + 1)}
+          className="cursor-pointer hover:text-neutral-500 shrink-0"
+          onClick={() => setSelectedPagination((p) => p + 1)}
         >
-          Próximo →
+          <span className="hidden sm:inline">Próximo</span> →
         </button>
       </div>
     </div>

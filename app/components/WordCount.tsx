@@ -7,7 +7,6 @@ export default function WordCount({ text }: { text: string }) {
       <Text as="p" className="text-xs text-muted-foreground">
         {text.length} caracteres
       </Text>
-
       <HelpModal />
     </span>
   );

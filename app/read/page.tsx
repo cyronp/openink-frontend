@@ -45,7 +45,7 @@ export default function Read() {
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto w-full px-4 pt-10 pb-16 flex flex-col gap-6">
+      <main className="max-w-360 mx-auto w-full px-4 pt-10 pb-16 flex flex-col gap-6">
         <div className="flex flex-col gap-3">
           <Heading as="h1" className="text-3xl font-semibold leading-tight">
             {content.title}
@@ -60,35 +60,50 @@ export default function Read() {
 
           <div className="flex items-center gap-3 pt-1">
             <div className="flex flex-col">
-              <Text as="p" className="text-sm font-medium">
+              <Text as="p" className="text-base font-medium">
                 Autor(a): {content.author.name}
               </Text>
-              <Text as="p" className="text-xs text-muted-foreground">
+              <Text as="p" className="text-sm text-muted-foreground">
                 Publicado em: {content.publishedAt}
               </Text>
             </div>
           </div>
 
           <div className="flex items-center gap-4 pt-1">
-            <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <Heart size={13} />
-              <Text as="p" className="text-xs text-muted-foreground">
+            <span className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Button variant="ghost" size="fit">
+                <Heart size={16} />
+              </Button>
+              <Text
+                as="p"
+                className="text-xs lg:text-base text-muted-foreground"
+              >
                 {content.likes} curtidas
               </Text>
             </span>
-            <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <Clock size={13} />
-              <Text as="p" className="text-xs text-muted-foreground">
+            <span className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Clock size={16} />
+              <Text
+                as="p"
+                className="text-xs lg:text-base text-muted-foreground"
+              >
                 {minutes} min de leitura
               </Text>
             </span>
-            <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <AlignLeft size={13} />
-              <Text as="p" className="text-xs text-muted-foreground">
+            <span className="flex items-center gap-1 text-xs text-muted-foreground">
+              <AlignLeft size={16} />
+              <Text
+                as="p"
+                className="text-xs lg:text-base text-muted-foreground"
+              >
                 {chars} caracteres
               </Text>
             </span>
           </div>
+        </div>
+        <div className="inline-flex gap-1">
+            <Text as="span" className="text-base text-muted-foreground">Este é um conteudo impróprio?</Text>
+            <Button className="text-red-500 text-base gap-1" variant="ghost" size="fit">Denunciar</Button>
         </div>
 
         <Separator />
