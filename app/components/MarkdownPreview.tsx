@@ -5,8 +5,8 @@ import Text from "@/app/components/ui/Text/Text";
 import { Separator } from "@/app/components/ui/Separator/Separator";
 
 type Props = {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   content: string;
 };
 
