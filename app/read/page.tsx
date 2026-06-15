@@ -5,6 +5,7 @@ import { ChevronLeft, Heart, Clock, AlignLeft } from "lucide-react";
 import Text from "@/app/components/ui/Text/Text";
 import Heading from "@/app/components/ui/Heading/Heading";
 import { Separator } from "@/app/components/ui/Separator/Separator";
+import ReportModal from "../components/ReportModal/ReportModal";
 
 const content = {
   title: "Exemplo de titulo de publicação",
@@ -102,8 +103,10 @@ export default function Read() {
           </div>
         </div>
         <div className="inline-flex gap-1">
-            <Text as="span" className="text-base text-muted-foreground">Este é um conteudo impróprio?</Text>
-            <Button className="text-red-500 text-base gap-1" variant="ghost" size="fit">Denunciar</Button>
+          <Text as="span" className="text-base text-muted-foreground">
+            Este é um conteudo impróprio?
+          </Text>
+          <ReportModal />
         </div>
 
         <Separator />
