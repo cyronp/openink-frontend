@@ -12,9 +12,6 @@ import { ReportSchema, ReportFormValues } from "@/app/schema/ReportSchema";
 
 export default function ReportModal() {
   const [isOpen, setIsOpen] = useState(false);
-
-  // DELETED: selectedValue state. React Hook Form manages this now!
-
   const {
     control,
     handleSubmit,
@@ -49,7 +46,7 @@ export default function ReportModal() {
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30">
-          <div className="bg-white w-full max-w-135 p-6 relative shadow-2xl flex flex-col gap-2 rounded-md">
+          <div className="bg-white w-full max-w-135 p-6 relative shadow-2xl flex flex-col gap-2">
             <Button
               className="absolute top-4 right-4 cursor-pointer"
               onClick={() => setIsOpen(false)}

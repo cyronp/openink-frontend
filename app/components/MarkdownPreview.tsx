@@ -2,7 +2,6 @@ import Markdown from "react-markdown";
 
 import Heading from "@/app/components/ui/Heading/Heading";
 import Text from "@/app/components/ui/Text/Text";
-import { Separator } from "@/app/components/ui/Separator/Separator";
 
 type Props = {
   title?: string;
@@ -17,38 +16,38 @@ export default function MarkdownPreview({
 }: Props) {
   if (!content.trim()) {
     return (
-      <div className="flex flex-col items-center justify-center h-48 gap-2">
-        <Text as="p" className="text-sm text-muted-foreground">
-          O preview aparecerá aqui
+      <div className="flex flex-col items-center justify-center h-48 border-2 border-black p-4">
+        <Text as="p" className="text-base font-bold text-black uppercase tracking-widest">
+          Sem conteúdo
         </Text>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-4 text-sm leading-7 text-foreground">
+    <div className="flex flex-col text-sm md:text-base leading-relaxed text-black font-medium">
       {title && (
-        <Heading as="h1" className="text-2xl font-semibold leading-tight">
+        <Heading as="h1" className="text-2xl md:text-3xl font-bold leading-none tracking-tighter text-black mb-3 md:mb-4">
           {title}
         </Heading>
       )}
 
       {description && (
         <>
-          <Text as="p" className="text-sm text-muted-foreground">
+          <Text as="p" className="text-base md:text-lg text-black font-medium leading-snug mb-6 md:mb-8">
             {description}
           </Text>
-
-          <Separator />
+          <hr className="border-black border-t-2 w-full mb-6 md:mb-8" />
         </>
       )}
 
-      <Markdown
-        components={{
+      <div className="flex flex-col gap-4 md:gap-6">
+        <Markdown
+          components={{
           h1: ({ children }) => (
             <Heading
               as="h1"
-              className="text-2xl font-semibold mt-8 mb-3"
+              className="text-2xl md:text-3xl font-bold mt-10 md:mt-12 mb-4 md:mb-6 tracking-tighter text-black uppercase"
             >
               {children}
             </Heading>
@@ -57,7 +56,7 @@ export default function MarkdownPreview({
           h2: ({ children }) => (
             <Heading
               as="h2"
-              className="text-xl font-semibold mt-6 mb-2"
+              className="text-xl md:text-2xl font-bold mt-8 md:mt-10 mb-3 md:mb-4 tracking-tight text-black border-b-2 border-black pb-2"
             >
               {children}
             </Heading>
@@ -66,60 +65,58 @@ export default function MarkdownPreview({
           h3: ({ children }) => (
             <Heading
               as="h3"
-              className="text-base font-semibold mt-4 mb-2"
+              className="text-lg md:text-xl font-bold mt-6 md:mt-8 mb-3 md:mb-4 tracking-tight text-black"
             >
               {children}
             </Heading>
           ),
 
           p: ({ children }) => (
-            <Text as="p" className="leading-7">
+            <Text as="p" className="leading-relaxed mb-3 md:mb-4">
               {children}
             </Text>
           ),
 
           strong: ({ children }) => (
-            <strong className="font-semibold">{children}</strong>
+            <strong className="font-bold bg-black text-white px-1">{children}</strong>
           ),
 
           em: ({ children }) => (
-            <em className="italic text-muted-foreground">
-              {children}
-            </em>
+            <em className="italic">{children}</em>
           ),
 
           blockquote: ({ children }) => (
-            <blockquote className="border-l-2 border-foreground pl-4 italic text-muted-foreground">
+            <blockquote className="border-l-4 md:border-l-8 border-black pl-4 md:pl-6 py-2 my-4 md:my-6 font-bold text-base md:text-lg italic text-black bg-neutral-100">
               {children}
             </blockquote>
           ),
 
           code: ({ children, className }) =>
             className?.includes("language-") ? (
-              <code className="block bg-muted p-4 rounded text-xs font-mono overflow-x-auto">
+              <code className="block bg-black text-white p-4 md:p-6 text-xs md:text-sm font-mono overflow-x-auto my-4 md:my-6 rounded-none border border-black">
                 {children}
               </code>
             ) : (
-              <code className="bg-muted px-1.5 py-0.5 rounded text-xs font-mono">
+              <code className="bg-neutral-200 text-black px-1.5 py-0.5 border border-black text-xs md:text-sm font-mono rounded-none font-bold break-words">
                 {children}
               </code>
             ),
 
           ul: ({ children }) => (
-            <ul className="list-none flex flex-col gap-1">
+            <ul className="list-disc list-outside ml-6 md:ml-8 flex flex-col gap-2 md:gap-3 mb-4 md:mb-6 text-black marker:text-black">
               {children}
             </ul>
           ),
 
           ol: ({ children }) => (
-            <ol className="list-decimal list-inside flex flex-col gap-1">
+            <ol className="list-decimal list-outside ml-6 md:ml-8 flex flex-col gap-2 md:gap-3 mb-4 md:mb-6 font-bold text-black marker:text-black">
               {children}
             </ol>
           ),
 
           li: ({ children }) => (
-            <li className="flex gap-2 before:content-['—'] before:text-muted-foreground">
-              {children}
+            <li className="pl-1 md:pl-2">
+              <span className="font-medium">{children}</span>
             </li>
           ),
 
@@ -128,17 +125,18 @@ export default function MarkdownPreview({
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="underline underline-offset-2 decoration-border hover:decoration-foreground"
+              className="underline underline-offset-4 decoration-black decoration-2 hover:bg-black hover:text-white transition-colors break-words"
             >
               {children}
             </a>
           ),
 
-          hr: () => <Separator className="my-8" />,
+          hr: () => <hr className="border-black border-t-2 w-full my-8 md:my-12" />,
         }}
       >
         {content}
       </Markdown>
+      </div>
     </div>
   );
 }

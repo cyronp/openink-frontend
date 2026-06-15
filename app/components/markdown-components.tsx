@@ -7,13 +7,13 @@ export const markdownComponents: React.ComponentProps<
   typeof Markdown
 >["components"] = {
   h1: ({ children }) => (
-    <Heading as="h1" className="text-2xl font-semibold mt-8 mb-3">
+    <Heading as="h1" className="text-xl font-semibold mt-8 mb-3">
       {children}
     </Heading>
   ),
 
   h2: ({ children }) => (
-    <Heading as="h2" className="text-xl font-semibold mt-6 mb-2">
+    <Heading as="h2" className="text-lg font-semibold mt-6 mb-2">
       {children}
     </Heading>
   ),
