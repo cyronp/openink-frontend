@@ -1,5 +1,6 @@
 import * as React from "react";
 import { cn } from "@/app/utils/cn";
+import { ChevronDown } from "lucide-react";
 
 export interface SelectOption {
   label: string;
@@ -118,16 +119,21 @@ export function Select({
         }
         className="
           flex w-full items-center justify-between
-          border border-gray-300 bg-white px-3 py-2
+          border border-neutral-300 bg-white px-3 py-2
           text-left text-sm cursor-pointer
           focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent
         "
       >
-        <span className={cn(!selected && "text-gray-400")}>
+        <span className={cn(!selected && "text-neutral-400")}>
           {selected?.label ?? placeholder}
         </span>
-        <span className={cn("transition-transform", open && "rotate-180")}>
-          ▾
+        <span
+          className={cn(
+            "transition-transform duration-300",
+            open && "rotate-180",
+          )}
+        >
+          <ChevronDown size={16} />
         </span>
       </button>
 
@@ -141,9 +147,8 @@ export function Select({
             w-full
             max-h-60
             overflow-y-auto
-            border border-gray-300
+            border border-black
             bg-white
-            shadow-lg
             z-50
             m-0 p-0 list-none
           "
