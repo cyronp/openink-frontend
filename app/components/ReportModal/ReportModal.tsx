@@ -9,6 +9,7 @@ import Text from "../ui/Text/Text";
 import { Separator } from "../ui/Separator/Separator";
 import { Select } from "../ui/Select/Select";
 import { ReportSchema, ReportFormValues } from "@/app/schema/ReportSchema";
+import FieldError from "../FieldError";
 
 export default function ReportModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,11 +83,7 @@ export default function ReportModal() {
                   )}
                 />
 
-                {errors.reportType && (
-                  <span className="text-sm text-red-500">
-                    {errors.reportType.message}
-                  </span>
-                )}
+                <FieldError error={errors.reportType} />
               </div>
               <Button variant="default" type="submit">
                 Enviar Denuncia

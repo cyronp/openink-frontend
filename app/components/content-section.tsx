@@ -90,13 +90,9 @@ export default function ContentSection() {
   const [selectedQuery, setSelectedQuery] = useState<FilterQuery>("all");
   const [selectedPagination, setSelectedPagination] = useState(1);
 
-  // Pagination Logic
   const itemsPerPage = 3;
   const totalPages = Math.ceil(publications.length / itemsPerPage);
 
-  // Future API Implementation note:
-  // When switching to a real API, pass `selectedPagination` and `selectedQuery`
-  // as query parameters (e.g. ?page=1&filter=all) and use server data instead of slicing.
   const startIndex = (selectedPagination - 1) * itemsPerPage;
   const currentPublications = publications.slice(
     startIndex,
@@ -131,7 +127,7 @@ export default function ContentSection() {
       </div>
 
       {/* Publication List */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
         {currentPublications.length === 0 ? (
           <div className="border-2 border-black p-4 text-center">
             <Text
@@ -146,7 +142,7 @@ export default function ContentSection() {
             <Link
               key={pub.id}
               href={`/${pub.id}`}
-              className="group block border-2 border-transparent hover:border-black p-4 md:p-6 transition-all focus:outline-none focus:border-black"
+              className="group block border-2 border-b-black border-transparent hover:border-black p-4 md:p-6 transition-all focus:outline-none focus:border-black"
             >
               <div className="flex flex-col gap-4">
                 <Heading
@@ -188,7 +184,7 @@ export default function ContentSection() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="w-full flex flex-col sm:flex-row gap-4 items-center justify-center border-t-2 border-black p-4">
+        <div className="w-full flex flex-col sm:flex-row gap-4 items-center justify-center p-4">
           <Button
             variant="default"
             disabled={selectedPagination === 1}

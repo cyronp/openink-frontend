@@ -8,7 +8,7 @@ export interface SelectOption {
   disabled?: boolean;
 }
 
-interface SelectProps {
+export interface SelectProps {
   options: SelectOption[];
   value?: string;
   placeholder?: string;
@@ -30,6 +30,17 @@ export function Select({
   const selected = options.find((o) => o.value === value);
   const listboxId = React.useId();
 
+  const handleOpen = React.useCallback(() => {
+    const index = options.findIndex((o) => o.value === value);
+    setHighlightedIndex(index >= 0 ? index : 0);
+    setOpen(true);
+  }, [options, value]);
+
+  const handleClose = React.useCallback(() => {
+    setHighlightedIndex(-1);
+    setOpen(false);
+  }, []);
+
   React.useEffect(() => {
     if (!open) return;
     function handleClickOutside(e: MouseEvent) {
@@ -37,34 +48,25 @@ export function Select({
         containerRef.current &&
         !containerRef.current.contains(e.target as Node)
       ) {
-        setOpen(false);
+        handleClose();
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [open]);
-
-  React.useEffect(() => {
-    if (open) {
-      const index = options.findIndex((o) => o.value === value);
-      setHighlightedIndex(index >= 0 ? index : 0);
-    } else {
-      setHighlightedIndex(-1);
-    }
-  }, [open, value, options]);
+  }, [open, handleClose]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!open) {
       if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown") {
         e.preventDefault();
-        setOpen(true);
+        handleOpen();
       }
       return;
     }
 
     switch (e.key) {
       case "Escape":
-        setOpen(false);
+        handleClose();
         break;
       case "ArrowDown":
         e.preventDefault();
@@ -91,11 +93,11 @@ export function Select({
         e.preventDefault();
         if (highlightedIndex >= 0 && !options[highlightedIndex].disabled) {
           onChange?.(options[highlightedIndex].value);
-          setOpen(false);
+          handleClose();
         }
         break;
       case "Tab":
-        setOpen(false);
+        handleClose();
         break;
     }
   };
@@ -108,7 +110,7 @@ export function Select({
     >
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => (open ? handleClose() : handleOpen())}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={open ? listboxId : undefined}
@@ -167,7 +169,7 @@ export function Select({
                 onClick={() => {
                   if (option.disabled) return;
                   onChange?.(option.value);
-                  setOpen(false);
+                  handleClose();
                 }}
                 onMouseEnter={() =>
                   !option.disabled && setHighlightedIndex(index)

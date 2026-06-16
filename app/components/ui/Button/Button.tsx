@@ -25,7 +25,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ),
       });
 
-      return React.cloneElement(childWithRef, { ref } as any);
+      return React.cloneElement(childWithRef, { ref } as React.Attributes);
     }
 
     return (
