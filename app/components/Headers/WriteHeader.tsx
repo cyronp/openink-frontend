@@ -7,8 +7,9 @@ import Heading from "@/app/components//ui/Heading/Heading";
 
 interface WriteHeaderProps {
   wordCount?: string;
+  isSubmitting?: boolean;
 }
-export default function WriteHeader() {
+export default function WriteHeader({ isSubmitting }: WriteHeaderProps = {}) {
   return (
     <header className="sticky top-0 z-10 bg-white border-b border-neutral-300">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-12 flex items-center justify-between">
@@ -33,8 +34,9 @@ export default function WriteHeader() {
           variant="default"
           className="cursor-pointer shrink-0"
           size="md"
+          disabled={isSubmitting}
         >
-          Publicar
+          {isSubmitting ? "Publicando..." : "Publicar"}
         </Button>
       </div>
     </header>

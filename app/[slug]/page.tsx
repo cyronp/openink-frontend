@@ -1,32 +1,29 @@
 import Link from "next/link";
 import MarkdownPreview from "../components/MarkdownPreview";
 import { Button } from "../components/ui/Button/Button";
-import { ChevronLeft, Heart, Clock, AlignLeft } from "lucide-react";
+import { ChevronLeft, Clock, AlignLeft, User, Calendar, Heart } from "lucide-react";
 import Text from "@/app/components/ui/Text/Text";
 import Heading from "@/app/components/ui/Heading/Heading";
 import ReportModal from "../components/ReportModal/ReportModal";
+import { getPost } from "@/app/actions/getPost";
+import { notFound } from "next/navigation";
 
-const content = {
-  title: "Exemplo de titulo de publicação",
-  description: "Exemplo de descrição de publicação",
-  content:
-    "# Lorem ipsum dolor sit, amet consectetur adipisicing elit.\n ## Autem nemo delectus et, provident ducimus perferendis pariatur eligendi?\n ### Libero beatae, laboriosam odit tenetur, suscipit fuga iure quasi blanditiis asperiores repudiandae voluptatibus? Explicabo molestiae soluta odit sit nemo corporis sed eveniet minus ipsum? Rerum a pariatur sapiente ipsam amet eum repudiandae perferendis!",
-  author: {
-    name: "João Silva",
-  },
-  publishedAt: "10 de junho de 2026",
-  likes: 42,
-};
-
-function readingTime(text: string) {
-  const words = text.trim().split(/\s+/).length;
-  const minutes = Math.ceil(words / 200);
-  return minutes;
+interface PageProps {
+  params: Promise<{ slug: string }>;
 }
 
-export default function Read() {
-  const chars = content.content.length;
-  const minutes = readingTime(content.content);
+export default async function Read({ params }: PageProps) {
+  const { slug } = await params;
+  const res = await getPost(slug);
+
+  if (!res.success || !res.data) {
+    notFound();
+  }
+
+  const post = res.data;
+  const textContent = post.text || "";
+  const chars = textContent.length;
+  const minutes = post.readTime || Math.ceil((textContent.trim().split(/\s+/).length || 0) / 200);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -54,32 +51,32 @@ export default function Read() {
             as="h1"
             className="text-lg md:text-2xl font-bold leading-none tracking-tighter text-black"
           >
-            {content.title}
+            {post.title}
           </Heading>
 
           <Text as="p" className="text-muted-foreground leading-snug font-medium">
-            {content.description}
+            {post.description}
           </Text>
 
           <div className="flex flex-col md:flex-row md:items-center justify-between border-y border-black py-4 mt-4 gap-4">
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-2">
               <Text
                 as="p"
-                className="font-semibold text-black tracking-tight"
+                className="font-semibold text-black tracking-tight flex items-center gap-2"
               >
-                Autor(a): {content.author.name}
+                <User size={16} /> Autor(a): User {post.userId}
               </Text>
-              <Text as="p" className="text-sm text-black">
-                Publicado em: {content.publishedAt}
+              <Text as="p" className="text-sm text-black flex items-center gap-2">
+                <Calendar size={16} /> Publicado em: {new Date(post.createdAt).toLocaleDateString()}
               </Text>
             </div>
 
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1 text-xs font-semibold text-muted-foreground uppercase">
-                <Button size="fit" variant="ghost">
+                <Button size="fit" variant="ghost" className="pointer-events-none">
                   <Heart size={18} strokeWidth={2} />
                 </Button>
-                {content.likes} curtidas
+                {post.likes || 0} curtidas
               </span>
               <span className="flex items-center gap-1 text-xs font-semibold text-muted-foreground uppercase">
                 <Clock size={18} strokeWidth={2} />
@@ -93,7 +90,7 @@ export default function Read() {
           </div>
         </div>
 
-        <MarkdownPreview content={content.content} />
+        <MarkdownPreview content={textContent} />
 
         <div className="flex items-center gap-3 pt-8 border-t border-black mt-8">
           <Text as="span" className="text-xs md:text-sm font-bold uppercase text-black">

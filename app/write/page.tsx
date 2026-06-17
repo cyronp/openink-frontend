@@ -14,9 +14,13 @@ import FieldError from "@/app/components/FieldError";
 import WordCount from "@/app/components/WordCount";
 import MarkdownPreview from "@/app/components/MarkdownPreview";
 import WriteHeader from "../components/Headers/WriteHeader";
+import { createPost } from "./actions";
+import { useRouter } from "next/navigation";
 
 export default function WritePage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"write" | "preview">("write");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -34,13 +38,26 @@ export default function WritePage() {
 
   const form = watch();
 
-  const submitPost = (data: WritePost) => {
-    console.log("Dados enviados:", data);
+  const submitPost = async (data: WritePost) => {
+    setIsSubmitting(true);
+    try {
+      const result = await createPost(data);
+      if (result.success) {
+        alert("Post criado com sucesso!");
+        router.push("/");
+      } else {
+        alert("Erro ao criar post: " + result.error);
+      }
+    } catch (error) {
+      alert("Erro inesperado ao criar post.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <WriteHeader/>
+      <WriteHeader isSubmitting={isSubmitting} />
 
       <div className="md:hidden flex border-b border-border">
         <button

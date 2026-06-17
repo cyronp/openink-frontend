@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Text from "@/app/components/ui/Text/Text";
 import Heading from "@/app/components/ui/Heading/Heading";
 import Link from "next/link";
@@ -7,77 +7,23 @@ import {
   Heart,
   User,
   Clock,
-  AlignLeft,
   ArrowLeft,
   ArrowRight,
   Calendar,
 } from "lucide-react";
 import { Button } from "./ui/Button/Button";
+import { getPosts } from "@/app/actions/getPosts";
 
 type FilterQuery = "all" | "weekly" | "monthly" | "alltime";
 
 type Publication = {
-  id: string;
+  id: number;
   title: string;
   description: string;
-  likeQnt: number;
-  user: string;
+  userId: number;
   readTime: number;
-  caracterQnt: number;
+  createdAt: string;
 };
-
-const publications: Publication[] = [
-  {
-    id: "1",
-    title: "On solitude and the art of doing nothing",
-    description:
-      "There is a particular kind of peace that comes only when you stop trying to fill the silence. I found it on a Tuesday, between two failed attempts at productivity.",
-    likeQnt: 320,
-    user: "V. Henrique",
-    readTime: 6,
-    caracterQnt: 2100,
-  },
-  {
-    id: "2",
-    title: "The slow return of analogue rituals",
-    description:
-      "Notebooks, vinyl, darkrooms — something in us resists the frictionless. A meditation on why difficulty sometimes feels like home.",
-    likeQnt: 214,
-    user: "C. Moreira",
-    readTime: 4,
-    caracterQnt: 1540,
-  },
-  {
-    id: "3",
-    title: "What cities forget when they grow too fast",
-    description:
-      "Urban memory is not stored in buildings. It lives in the habits of those who walk the streets daily, in the unwritten rules of a neighbourhood.",
-    likeQnt: 481,
-    user: "L. Faria",
-    readTime: 9,
-    caracterQnt: 3200,
-  },
-  {
-    id: "4",
-    title: "A brief history of waiting",
-    description:
-      "Before push notifications, waiting was a practice. You waited for the letter, the season, the person. Perhaps patience was never a virtue — just a technology.",
-    likeQnt: 892,
-    user: "R. Tavares",
-    readTime: 7,
-    caracterQnt: 2780,
-  },
-  {
-    id: "5",
-    title: "The paradox of choice in modern design",
-    description:
-      "When every option is available, no option feels right. How limiting your palette can unexpectedly expand your creativity.",
-    likeQnt: 531,
-    user: "A. Silva",
-    readTime: 5,
-    caracterQnt: 1950,
-  },
-];
 
 const OPTIONS: { label: string; query: FilterQuery }[] = [
   { label: "TODOS", query: "all" },
@@ -89,15 +35,28 @@ const OPTIONS: { label: string; query: FilterQuery }[] = [
 export default function ContentSection() {
   const [selectedQuery, setSelectedQuery] = useState<FilterQuery>("all");
   const [selectedPagination, setSelectedPagination] = useState(1);
+  const [publications, setPublications] = useState<Publication[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   const itemsPerPage = 3;
-  const totalPages = Math.ceil(publications.length / itemsPerPage);
 
-  const startIndex = (selectedPagination - 1) * itemsPerPage;
-  const currentPublications = publications.slice(
-    startIndex,
-    startIndex + itemsPerPage,
-  );
+  useEffect(() => {
+    async function fetchPublications() {
+      setIsLoading(true);
+      const res = await getPosts(
+        selectedPagination - 1,
+        itemsPerPage,
+        "createdAt",
+      );
+      if (res.success && res.data) {
+        setPublications(res.data.content || []);
+        setTotalPages(res.data.totalPages || 1);
+      }
+      setIsLoading(false);
+    }
+    fetchPublications();
+  }, [selectedPagination, selectedQuery]);
 
   const handlePageChange = (page: number) => {
     setSelectedPagination(page);
@@ -128,7 +87,16 @@ export default function ContentSection() {
 
       {/* Publication List */}
       <div className="flex flex-col gap-2">
-        {currentPublications.length === 0 ? (
+        {isLoading ? (
+          <div className="border-2 border-black p-4 text-center">
+            <Text
+              as="p"
+              className="text-black font-bold uppercase tracking-widest"
+            >
+              Carregando publicações...
+            </Text>
+          </div>
+        ) : publications.length === 0 ? (
           <div className="border-2 border-black p-4 text-center">
             <Text
               as="p"
@@ -138,7 +106,7 @@ export default function ContentSection() {
             </Text>
           </div>
         ) : (
-          currentPublications.map((pub) => (
+          publications.map((pub) => (
             <Link
               key={pub.id}
               href={`/${pub.id}`}
@@ -161,19 +129,14 @@ export default function ContentSection() {
 
                 <div className="flex flex-wrap gap-4 text-xs text-muted-foreground font-semibold uppercase">
                   <Text as="span" className="flex items-center gap-1 text-sm">
-                    <Heart size={14} /> {pub.likeQnt}
-                  </Text>
-                  <Text as="span" className="flex items-center gap-1 text-sm">
-                    <User size={14} /> {pub.user}
+                    <User size={14} /> User {pub.userId}
                   </Text>
                   <Text as="span" className="flex items-center gap-1 text-sm">
                     <Clock size={14} /> {pub.readTime} MIN
                   </Text>
                   <Text as="span" className="flex items-center gap-1 text-sm">
-                    <AlignLeft size={14} /> {pub.caracterQnt} CARACTERES
-                  </Text>
-                  <Text as="span" className="flex items-center gap-1 text-sm">
-                    <Calendar size={14}/> Publicado em: 20/12/2025
+                    <Calendar size={14} />{" "}
+                    {new Date(pub.createdAt).toLocaleDateString()}
                   </Text>
                 </div>
               </div>
@@ -194,7 +157,9 @@ export default function ContentSection() {
             className="flex items-center gap-2 px-4 py-2 border-2 border-black font-bold uppercase text-sm disabled:opacity-30 hover:bg-black hover:text-white transition-colors disabled:hover:bg-transparent disabled:hover:text-black cursor-pointer"
           >
             <ArrowLeft size={18} strokeWidth={2.5} />
-            <Text as="span" className="hidden sm:inline">Anterior</Text>
+            <Text as="span" className="hidden sm:inline">
+              Anterior
+            </Text>
           </Button>
 
           <div className="flex flex-row gap-2">
@@ -202,7 +167,7 @@ export default function ContentSection() {
               const page = i + 1;
               return (
                 <Button
-                variant="ghost"
+                  variant="ghost"
                   key={page}
                   onClick={() => handlePageChange(page)}
                   className={`w-10 h-10 flex items-center justify-center border-2 border-black font-bold text-sm transition-colors cursor-pointer ${
