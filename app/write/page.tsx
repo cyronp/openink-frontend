@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eye, PenLine } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,11 +16,22 @@ import MarkdownPreview from "@/app/components/MarkdownPreview";
 import WriteHeader from "../components/Headers/WriteHeader";
 import { createPost } from "./actions";
 import { useRouter } from "next/navigation";
+import { checkAuth } from "@/app/utils/auth";
 
 export default function WritePage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<"write" | "preview">("write");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    async function verifyAuth() {
+      const auth = await checkAuth();
+      if (!auth.loggedIn) {
+        router.push("/?loginRequired=true");
+      }
+    }
+    verifyAuth();
+  }, [router]);
 
   const {
     register,

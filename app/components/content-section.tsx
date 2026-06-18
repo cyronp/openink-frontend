@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/Button/Button";
 import { getPosts } from "@/app/actions/getPosts";
+import { getLikes } from "@/app/actions/likes";
+import { getUser } from "@/app/actions/getUser";
 
 type FilterQuery = "all" | "weekly" | "monthly" | "alltime";
 
@@ -23,6 +25,8 @@ type Publication = {
   userId: number;
   readTime: number;
   createdAt: string;
+  likes?: number;
+  authorName?: string;
 };
 
 const OPTIONS: { label: string; query: FilterQuery }[] = [
@@ -32,31 +36,98 @@ const OPTIONS: { label: string; query: FilterQuery }[] = [
   { label: "TODO O TEMPO", query: "alltime" },
 ];
 
-export default function ContentSection() {
+interface ContentSectionProps {
+  searchQuery: string;
+}
+
+export default function ContentSection({ searchQuery }: ContentSectionProps) {
   const [selectedQuery, setSelectedQuery] = useState<FilterQuery>("all");
   const [selectedPagination, setSelectedPagination] = useState(1);
   const [publications, setPublications] = useState<Publication[]>([]);
+  const [allPosts, setAllPosts] = useState<Publication[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
   const itemsPerPage = 3;
 
   useEffect(() => {
-    async function fetchPublications() {
+    async function loadAllPosts() {
       setIsLoading(true);
-      const res = await getPosts(
-        selectedPagination - 1,
-        itemsPerPage,
-        "createdAt",
-      );
-      if (res.success && res.data) {
-        setPublications(res.data.content || []);
-        setTotalPages(res.data.totalPages || 1);
+      try {
+        const res = await getPosts(0, 1000, "createdAt");
+        if (res.success && res.data) {
+          setAllPosts(res.data.content || []);
+        }
+      } catch (err) {
+        console.error("Error loading posts:", err);
+      } finally {
+        setIsLoading(false);
       }
+    }
+    loadAllPosts();
+  }, []);
+
+  useEffect(() => {
+    setSelectedPagination(1);
+  }, [selectedQuery, searchQuery]);
+
+  useEffect(() => {
+    async function filterAndHydrate() {
+      if (allPosts.length === 0) {
+        setPublications([]);
+        setTotalPages(1);
+        return;
+      }
+
+      setIsLoading(true);
+
+      let temp = [...allPosts];
+      const now = new Date();
+      if (selectedQuery === "weekly") {
+        const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        temp = temp.filter((pub) => new Date(pub.createdAt) >= sevenDaysAgo);
+      } else if (selectedQuery === "monthly") {
+        const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+        temp = temp.filter((pub) => new Date(pub.createdAt) >= thirtyDaysAgo);
+      }
+
+      // Apply search query filter (case-insensitive title search)
+      if (searchQuery) {
+        temp = temp.filter((pub) =>
+          pub.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+
+      // Hydrate all filtered posts with likes and author names in parallel to support global sorting
+      const hydrated = await Promise.all(
+        temp.map(async (pub) => {
+          const [likesRes, userRes] = await Promise.all([
+            getLikes(pub.id),
+            getUser(pub.userId),
+          ]);
+          return {
+            ...pub,
+            likes: likesRes.success ? likesRes.likes : 0,
+            authorName: userRes.success ? userRes.data.name : `User ${pub.userId}`,
+          };
+        })
+      );
+
+      // Sort globally by likes count descending
+      const sorted = hydrated.sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0));
+
+      // Slice the globally sorted array for client-side pagination
+      const calculatedTotalPages = Math.ceil(sorted.length / itemsPerPage);
+      const startIndex = (selectedPagination - 1) * itemsPerPage;
+      const paginatedItems = sorted.slice(startIndex, startIndex + itemsPerPage);
+
+      setPublications(paginatedItems);
+      setTotalPages(calculatedTotalPages || 1);
       setIsLoading(false);
     }
-    fetchPublications();
-  }, [selectedPagination, selectedQuery]);
+
+    filterAndHydrate();
+  }, [allPosts, selectedPagination, selectedQuery, searchQuery]);
 
   const handlePageChange = (page: number) => {
     setSelectedPagination(page);
@@ -115,7 +186,7 @@ export default function ContentSection() {
               <div className="flex flex-col gap-4">
                 <Heading
                   as="h3"
-                  className="text-xl font-bold uppercase tracking-tighter text-black group-hover:underline decoration-4 underline-offset-4"
+                  className="text-xl font-bold uppercase tracking-tighter text-black group-hover:underline decoration-4 underline-offset-4 truncate"
                 >
                   {pub.title}
                 </Heading>
@@ -128,8 +199,11 @@ export default function ContentSection() {
                 </Text>
 
                 <div className="flex flex-wrap gap-4 text-xs text-muted-foreground font-semibold uppercase">
+                  <Text as="span" className="flex items-center gap-1 text-sm text-red-500">
+                    <Heart size={14} className="fill-current" /> {pub.likes ?? 0}
+                  </Text>
                   <Text as="span" className="flex items-center gap-1 text-sm">
-                    <User size={14} /> User {pub.userId}
+                    <User size={14} /> {pub.authorName}
                   </Text>
                   <Text as="span" className="flex items-center gap-1 text-sm">
                     <Clock size={14} /> {pub.readTime} MIN
