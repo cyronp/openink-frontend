@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OpenInk Frontend
 
-## Getting Started
+Este é o repositório do frontend do projeto **OpenInk**, desenvolvido utilizando Next.js.
 
-First, run the development server:
+## 🚀 Como Executar o Projeto
+
+Siga os passos abaixo para configurar e rodar o projeto localmente em sua máquina.
+
+### Pré-requisitos
+Antes de começar, certifique-se de ter instalado:
+- **Node.js** (versão 18 ou superior recomendada)
+- **npm** (incluso com o Node.js) ou outro gerenciador de pacotes compatível (como Yarn ou pnpm)
+
+---
+
+### 1. Instalar as Dependências
+Abra o terminal na pasta raiz do projeto e instale as dependências necessárias:
+
+```bash
+npm install
+# ou
+yarn install
+# ou
+pnpm install
+```
+
+### 2. Executar o Servidor de Desenvolvimento
+Inicie o servidor local para desenvolvimento:
 
 ```bash
 npm run dev
-# or
+# ou
 yarn dev
-# or
+# ou
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Após iniciar o servidor, abra o seu navegador e acesse:
+👉 **[http://localhost:3000](http://localhost:3000)**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Qualquer alteração feita no código (como na página inicial em `app/page.tsx`) atualizará a página de forma automática (Fast Refresh).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠️ Outros Comandos Úteis
 
-To learn more about Next.js, take a look at the following resources:
+### 📚 Storybook
+O projeto usa Storybook para desenvolvimento e documentação isolada de componentes. Para rodar o servidor do Storybook:
+```bash
+npm run storybook
+```
+Acesse no navegador através de:
+👉 **[http://localhost:6006](http://localhost:6006)**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🧪 Executar Testes
+O projeto utiliza o **Vitest** para os testes automatizados. Para rodar os testes em modo interativo:
+```bash
+npx vitest
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🧹 Linting (Formatação e Padronização)
+Para executar a checagem estática de qualidade de código (ESLint):
+```bash
+npm run lint
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+### 📦 Build de Produção
+Para criar a build otimizada de produção:
+```bash
+npm run build
+```
+
+Para rodar a aplicação em modo de produção (após ter executado o build):
+```bash
+npm run start
+```
