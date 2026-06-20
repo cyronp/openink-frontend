@@ -2,7 +2,7 @@
 
 Este é o repositório do frontend do projeto **OpenInk**, desenvolvido utilizando Next.js.
 
-## 🚀 Como Executar o Projeto
+## Como Executar o Projeto
 
 Siga os passos abaixo para configurar e rodar o projeto localmente em sua máquina.
 
@@ -36,25 +36,25 @@ pnpm dev
 ```
 
 Após iniciar o servidor, abra o seu navegador e acesse:
-👉 **[http://localhost:3000](http://localhost:3000)**
+**[http://localhost:3000](http://localhost:3000)**
 
 Qualquer alteração feita no código (como na página inicial em `app/page.tsx`) atualizará a página de forma automática (Fast Refresh).
 
 ---
 
-## 🛠️ Outros Comandos Úteis
+## Outros Comandos Úteis
 
-### 📚 Storybook
+### Storybook
 O projeto usa Storybook para desenvolvimento e documentação isolada de componentes. Para rodar o servidor do Storybook:
 ```bash
 npm run storybook
 ```
 Acesse no navegador através de:
-👉 **[http://localhost:6006](http://localhost:6006)**
+**[http://localhost:6006](http://localhost:6006)**
 
 ---
 
-### 🧪 Executar Testes
+### Executar Testes
 O projeto utiliza o **Vitest** para os testes automatizados. Para rodar os testes em modo interativo:
 ```bash
 npx vitest
@@ -62,7 +62,7 @@ npx vitest
 
 ---
 
-### 🧹 Linting (Formatação e Padronização)
+### Linting (Formatação e Padronização)
 Para executar a checagem estática de qualidade de código (ESLint):
 ```bash
 npm run lint
@@ -70,7 +70,7 @@ npm run lint
 
 ---
 
-### 📦 Build de Produção
+### Build de Produção
 Para criar a build otimizada de produção:
 ```bash
 npm run build
